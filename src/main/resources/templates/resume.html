@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/resources/css/genericCG.css" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" action="/" th:action="@{/resume}" th:object="${caregiver}" method="post">
+
+            <label class="alert" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></label>
+            <input type="text" th:field="*{firstName}" placeholder="First Name" />
+
+            <label class="alert" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label>
+            <input type="text" th:field="*{lastName}" placeholder="Last Name" />
+
+            <label class="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+            <input type="text" th:field="*{email}" placeholder="Email" />
+
+            <label class="alert" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+            <input type="password" th:field="*{password}" placeholder="Password" />
+
+            <label class="alert" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></label>
+            <input type="text" th:field="*{number}" placeholder="Number" />
+
+            <label class="alert" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></label>
+            <input type="text" th:field="*{postalCode}" placeholder="Postal Code" />
+
+            <label class="alert" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></label>
+            <input type="text" th:field="*{city}" placeholder="City" />
+
+            <label class="alert" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
+            <input type="text" th:field="*{address}" placeholder="Address" />
+
+            <button>create</button>
+
+            <p class="message">Already registered? <a href="/login">Sign In</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

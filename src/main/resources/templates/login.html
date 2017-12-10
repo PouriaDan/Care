@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/resources/css/generic.css" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <form class="login-form" th:action="@{/login}" method="post">
+
+            <label class="alert" th:if="${param.error}">Invalid username or password</label>
+            <input type="text" name="username" placeholder="Email" />
+            <input type="password" name="password" placeholder="Password" />
+
+            <button>submit</button>
+
+            <p class="message">Not registered? <a href="/register">Create an account</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
