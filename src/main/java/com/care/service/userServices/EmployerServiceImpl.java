@@ -5,6 +5,7 @@ import com.care.model.Role;
 import com.care.repository.userRepositories.EmployerRepository;
 import com.care.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -19,6 +20,9 @@ public class EmployerServiceImpl implements EmployerService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public Iterable<Employer> findAllEmployers(){
         return employerRepository.findAll();
@@ -31,6 +35,7 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Override
     public void saveEmployer(Employer employer){
+        employer.setPassword(bCryptPasswordEncoder.encode(employer.getPassword()));
         Role employerRole = roleRepository.findByRole("EMPLOYER");
         employer.setRoles(new HashSet<Role>(Arrays.asList(employerRole)));
         employer.setEnable(1);

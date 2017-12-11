@@ -5,6 +5,7 @@ import com.care.model.Role;
 import com.care.repository.userRepositories.CaregiverRepository;
 import com.care.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -15,9 +16,10 @@ public class CaregiverServiceImpl implements CaregiverService {
 
     @Autowired
     private CaregiverRepository caregiverRepository;
-
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public Iterable<Caregiver> findAllCaregivers(){
@@ -31,6 +33,7 @@ public class CaregiverServiceImpl implements CaregiverService {
 
     @Override
     public void saveCaregiver(Caregiver caregiver){
+        caregiver.setPassword(bCryptPasswordEncoder.encode(caregiver.getPassword()));
         Role caregiverRole = roleRepository.findByRole("CAREGIVER");
         caregiver.setRoles(new HashSet<Role>(Arrays.asList(caregiverRole)));
         caregiver.setEnable(1);

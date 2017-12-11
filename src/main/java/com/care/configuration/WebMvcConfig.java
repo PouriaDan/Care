@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -19,8 +20,8 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private DataSource dataSource;
 
-//    @Autowired
-//    private AuthHandler authHandler;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${spring.queries.employers-query}")
     private String employersQuery;
@@ -59,7 +60,8 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter{
                 .jdbcAuthentication()
                     .usersByUsernameQuery(employersQuery)
                     .authoritiesByUsernameQuery(rolesQuery)
-                    .dataSource(dataSource);
+                    .dataSource(dataSource)
+                    .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Autowired
