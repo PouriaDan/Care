@@ -11,6 +11,7 @@ public class Request {
     private int id;
     private Caregiver caregiver;
     private Job job;
+    private int accepted;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,5 +41,13 @@ public class Request {
 
     public void setJob(Job job) {
         this.job = job;
+    }
+
+    public int getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(int accepted) {
+        this.accepted = accepted;
     }
 }
