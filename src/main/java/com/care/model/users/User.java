@@ -20,8 +20,13 @@ public class User {
     private String postalCode;
     private String city;
     private String address;
-    private int enable;
+    private boolean enable;
     private Set<Role> roles;
+
+    public User() {
+        super();
+        this.enable=false;
+    }
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -125,11 +130,11 @@ public class User {
         this.roles = roles;
     }
 
-    public int getEnable() {
+    public boolean getEnable() {
         return enable;
     }
 
-    public void setEnable(int enable) {
+    public void setEnable(boolean enable) {
         this.enable = enable;
     }
 

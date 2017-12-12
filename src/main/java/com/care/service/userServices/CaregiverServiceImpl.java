@@ -36,7 +36,6 @@ public class CaregiverServiceImpl implements CaregiverService {
         caregiver.setPassword(bCryptPasswordEncoder.encode(caregiver.getPassword()));
         Role caregiverRole = roleRepository.findByRole("CAREGIVER");
         caregiver.setRoles(new HashSet<Role>(Arrays.asList(caregiverRole)));
-        caregiver.setEnable(1);
         caregiverRepository.save(caregiver);
     }
 }

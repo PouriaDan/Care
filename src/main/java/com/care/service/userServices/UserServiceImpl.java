@@ -3,6 +3,8 @@ package com.care.service.userServices;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import com.care.model.verification.VerificationToken;
+import com.care.repository.verificationRepository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
+    private VerificationTokenRepository tokenRepository;
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -30,21 +34,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public void saveUser(User user) {
-        Role userRole = roleRepository.findByRole("NORMAL_USER");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
-    }
-
-    @Override
-    public void saveAdmin(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
     }
 
 }

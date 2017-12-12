@@ -39,18 +39,6 @@ public class TestController {
     @Autowired
     private RequestRepository requestRepository;
 
-    @GetMapping(path="/addadmin")
-    public @ResponseBody String addNewAdmin() {
-        User e = new User();
-        e.setFirstName("Admin");
-        e.setLastName("Admin");
-        e.setEmail("admin@gmail.com");
-        e.setPassword("1374PaRSa");
-        e.setEnable(1);
-        userService.saveAdmin(e);
-        return "Saved";
-    }
-
     @GetMapping(path="/addemployer")
     public @ResponseBody String addNewEmplouer() {
         Employer e = new Employer();
@@ -58,7 +46,7 @@ public class TestController {
         e.setLastName("Employer");
         e.setEmail("employer@gmail.com");
         e.setPassword("1374PaRSa");
-        e.setEnable(1);
+        e.setEnable(true);
         employerService.saveEmployer(e);
         return "Saved";
     }
@@ -70,7 +58,7 @@ public class TestController {
         e.setLastName("caregiver");
         e.setEmail("caregiver@gmail.com");
         e.setPassword("1374PaRSa");
-        e.setEnable(1);
+        e.setEnable(true);
         caregiverService.saveCaregiver(e);
         return "Saved";
     }

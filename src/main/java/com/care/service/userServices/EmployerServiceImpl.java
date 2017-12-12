@@ -2,8 +2,10 @@ package com.care.service.userServices;
 
 import com.care.model.users.Employer;
 import com.care.model.Role;
+import com.care.model.verification.VerificationToken;
 import com.care.repository.userRepositories.EmployerRepository;
 import com.care.repository.RoleRepository;
+import com.care.repository.verificationRepository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,10 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Autowired
     private EmployerRepository employerRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -38,18 +40,18 @@ public class EmployerServiceImpl implements EmployerService {
         employer.setPassword(bCryptPasswordEncoder.encode(employer.getPassword()));
         Role employerRole = roleRepository.findByRole("EMPLOYER");
         employer.setRoles(new HashSet<Role>(Arrays.asList(employerRole)));
-        employer.setEnable(1);
         employerRepository.save(employer);
     }
 
     @Override
-    public void updateEmployer(Employer employerExist, Employer employer) {
-        employerExist.setFirstName(employer.getFirstName());
-        employerExist.setLastName(employer.getLastName());
-        employerExist.setNumber(employer.getNumber());
-        employerExist.setPostalCode(employer.getPostalCode());
-        employerExist.setCity(employer.getCity());
-        employerExist.setAddress(employer.getAddress());
-        saveEmployer(employerExist);
+    public void enableEmployer(Employer employer) {
+        employer.setEnable(true);
+        employerRepository.save(employer);
+    }
+
+    @Override
+    public void createVerificationToken(Employer employer, String token) {
+        VerificationToken userToken = new VerificationToken(employer, token);
+        tokenRepository.save(userToken);
     }
 }

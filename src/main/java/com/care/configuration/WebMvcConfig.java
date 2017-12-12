@@ -36,6 +36,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/").permitAll()
                     .antMatchers("/register").permitAll()
                     .antMatchers("/resume").permitAll()
+                    .antMatchers("/registrationConfirm").permitAll()
                     .antMatchers("/resources/**").permitAll()
                     .antMatchers("/test/**").permitAll()
                     .antMatchers("/admin/**").hasAuthority("ADMIN")
