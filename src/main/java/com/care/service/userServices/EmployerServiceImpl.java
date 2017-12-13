@@ -48,10 +48,4 @@ public class EmployerServiceImpl implements EmployerService {
         employer.setEnable(true);
         employerRepository.save(employer);
     }
-
-    @Override
-    public void createVerificationToken(Employer employer, String token) {
-        VerificationToken userToken = new VerificationToken(employer, token);
-        tokenRepository.save(userToken);
-    }
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.util.Calendar;
 
@@ -96,22 +97,28 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public String confirmRegistration (@RequestParam("token") String token) {
+    public ModelAndView confirmRegistration (@RequestParam("token") String token) {
+
+        ModelAndView modelAndView = new ModelAndView();
 
         VerificationToken verificationToken = tokenRepository.findByToken(token);
         if (verificationToken == null) {
-
+            modelAndView.addObject("error", "Invalid Token");
+            modelAndView.setViewName("login");
+            return modelAndView;
         }
-
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-
+            modelAndView.addObject("error", "Expired Token");
+            modelAndView.setViewName("login");
+            return modelAndView;
         }
-
         Employer employer = employerService.findEmployerByEmail(verificationToken.getEmployer().getEmail());
         if(token.equals(verificationToken.getToken())) {
+            modelAndView.addObject("message", "accout activation was successful");
+            modelAndView.setViewName("login");
             employerService.enableEmployer(employer);
         }
-        return "redirect:/";
+        return modelAndView;
     }
 }

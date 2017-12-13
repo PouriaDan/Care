@@ -7,5 +7,4 @@ public interface EmployerService {
     Employer findEmployerByEmail(String email);
     void saveEmployer(Employer employer);
     void enableEmployer(Employer employer);
-    void createVerificationToken(Employer employer, String token);
 }

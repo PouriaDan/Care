@@ -1,7 +1,6 @@
 package com.care.model.verification;
 
 import com.care.model.users.Employer;
-import com.care.model.users.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,7 +17,7 @@ public class VerificationToken {
 
     private String token;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Employer.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private Employer employer;
 
@@ -70,7 +69,7 @@ public class VerificationToken {
         return employer;
     }
 
-    public void setEmployer(User user) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 

@@ -9,7 +9,7 @@ public class SeniorCare extends Job{
 
     private Gender seniorGender;
     private int seniorAge;
-    private int isIll;
+    private boolean isIll;
     private String Illnesses;
 
     public Gender getSeniorGender() {
@@ -28,11 +28,11 @@ public class SeniorCare extends Job{
         this.seniorAge = seniorAge;
     }
 
-    public int getIsIll() {
+    public boolean getIsIll() {
         return isIll;
     }
 
-    public void setIsIll(int isIll) {
+    public void setIsIll(boolean isIll) {
         this.isIll = isIll;
     }
 

@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 public class HouseCleaning extends Job {
 
     private String requiredServices;
-    private int pet;
+    private boolean pet;
 
     public String getRequiredServices() {
         return requiredServices;
@@ -16,11 +16,11 @@ public class HouseCleaning extends Job {
         this.requiredServices = requiredServices;
     }
 
-    public int getPet() {
+    public boolean getPet() {
         return pet;
     }
 
-    public void setPet(int pet) {
+    public void setPet(boolean pet) {
         this.pet = pet;
     }
 }

@@ -2,6 +2,8 @@ package com.care.component;
 
 import com.care.model.users.Employer;
 import com.care.model.users.User;
+import com.care.model.verification.VerificationToken;
+import com.care.repository.verificationRepository.VerificationTokenRepository;
 import com.care.service.userServices.EmployerService;
 import com.care.service.userServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     @Autowired
     private EmployerService employerService;
     @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
+    @Autowired
     private JavaMailSender mailSender;
 
     @Override
@@ -29,7 +33,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     private void sendActivationMail(OnRegistrationCompleteEvent event){
         Employer employer = event.getEmployer();
         String token = UUID.randomUUID().toString();
-        employerService.createVerificationToken(employer, token);
+        //VerificationToken verificationToken = verificationTokenRepository.findByEmployer(employer);
+        verificationTokenRepository.save(new VerificationToken(employer, token));
 
         String recipientAddress = employer.getEmail();
         String subject = "Registration Confirmation";

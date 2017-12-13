@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Job {
+public abstract class Job {
 
     private Integer id;
     private Employer employer;

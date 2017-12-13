@@ -1,10 +1,14 @@
 package com.care.controller;
 
 import com.care.model.enums.CaregiverGender;
+import com.care.model.jobs.BabySitting;
+import com.care.model.jobs.HouseCleaning;
 import com.care.model.jobs.Job;
 import com.care.model.request.Request;
 import com.care.model.users.Caregiver;
 import com.care.model.users.Employer;
+import com.care.repository.jobRepositories.BabysittingRepository;
+import com.care.repository.jobRepositories.HouseCleaningRepository;
 import com.care.repository.jobRepositories.JobRepository;
 import com.care.repository.requestRepository.RequestRepository;
 import com.care.service.userServices.CaregiverService;
@@ -26,16 +30,16 @@ public class TestController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private CaregiverService caregiverService;
-
     @Autowired
     private EmployerService employerService;
-
     @Autowired
     private JobRepository jobRepository;
-
+    @Autowired
+    private BabysittingRepository babysittingRepository;
+    @Autowired
+    private HouseCleaningRepository houseCleaningRepository;
     @Autowired
     private RequestRepository requestRepository;
 
@@ -78,16 +82,55 @@ public class TestController {
         return employerService.findAllEmployers();
     }
 
-    @GetMapping(path="/addjob")
-    public @ResponseBody String addNewJob() {
+    @GetMapping(path="/addbabysitjob")
+    public @ResponseBody String addNewBSJob() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Employer employer = employerService.findEmployerByEmail(auth.getName());
-        Job j = new Job();
+        BabySitting j = new BabySitting();
         j.setEmployer(employer);
         j.setCaregiverGender(CaregiverGender.Either);
         j.setDescription("Hichchi");
+        j.setNumbersOfKids_0_6m(1);
+        j.setNumbersOfKids_7m_3y(0);
+        j.setNumbersOfKids_4y_6y(0);
+        j.setNumbersOfKids_7y_11y(0);
+        j.setNumbersOfKids_12y(0);
         jobRepository.save(j);
         return "Saved";
+    }
+
+    @GetMapping(path="/addhousecleaning")
+    public @ResponseBody String addNewHCJob() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Employer employer = employerService.findEmployerByEmail(auth.getName());
+        HouseCleaning j = new HouseCleaning();
+        j.setEmployer(employer);
+        j.setCaregiverGender(CaregiverGender.Either);
+        j.setDescription("Hichchi");
+        j.setPet(true);
+        j.setRequiredServices("zarf shostan");
+        jobRepository.save(j);
+        return "Saved";
+    }
+
+    @GetMapping(path = "/allbsjobs")
+    public @ResponseBody String getAllbsjobs() {
+        String s="";
+        Iterable<BabySitting> jobs = babysittingRepository.findAll();
+        for (Job j : jobs){
+            s+=j.getId()+" "+j.getEmployer().getEmail();
+        }
+        return s;
+    }
+
+    @GetMapping(path = "/allhcjobs")
+    public @ResponseBody String getAllhcjobs() {
+        String s="";
+        Iterable<HouseCleaning> jobs = houseCleaningRepository.findAll();
+        for (Job j : jobs){
+            s+=j.getId()+" "+j.getEmployer().getEmail();
+        }
+        return s;
     }
 
     @GetMapping(path = "/alljobs")
