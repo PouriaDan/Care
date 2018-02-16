@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/generic.css}" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <h1>Welcome</h1>
+
+        <p class="message" th:text="${caregiver.firstName}"></p>
+        <p class="message" th:text="${caregiver.lastName}"></p>
+        <p class="message" th:text="${caregiver.email}"></p>
+        <p class="message" th:text="${caregiver.number}"></p>
+        <p class="message" th:text="${caregiver.postalCode}"></p>
+        <p class="message" th:text="${caregiver.city}"></p>
+        <p class="message" th:text="${caregiver.address}"></p>
+        <p class="message" th:text="${caregiver.enable}"></p>
+
+        <form class="register-form" action="#" th:action="@{'/admin/activate-caregiver/'+${caregiver.id}}"
+              th:object="${caregiver}" method="post">
+            <button>Activate User</button>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

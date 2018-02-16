@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.care.model.users.User;
@@ -43,8 +44,8 @@ public class TestController {
     @Autowired
     private RequestRepository requestRepository;
 
-    @GetMapping(path="/addemployer")
-    public @ResponseBody String addNewEmplouer() {
+    @RequestMapping(value="/addemployer", method = RequestMethod.GET)
+    public @ResponseBody String addNewEmployer() {
         Employer e = new Employer();
         e.setFirstName("Employer");
         e.setLastName("Employer");
@@ -55,15 +56,27 @@ public class TestController {
         return "Saved";
     }
 
-    @GetMapping(path="/addcaregiver")
-    public @ResponseBody String addNewCaregiver () {
-        Caregiver e = new Caregiver();
-        e.setFirstName("caregiver");
-        e.setLastName("caregiver");
-        e.setEmail("caregiver@gmail.com");
-        e.setPassword("1374PaRSa");
-        e.setEnable(true);
-        caregiverService.saveCaregiver(e);
+    @RequestMapping(value="/addcaregiver", method = RequestMethod.GET)
+    public @ResponseBody String addNewCaregiver() {
+        Caregiver c = new Caregiver();
+        c.setFirstName("caregiver");
+        c.setLastName("caregiver");
+        c.setEmail("caregiver@gmail.com");
+        c.setPassword("1374PaRSa");
+        c.setEnable(true);
+        caregiverService.saveCaregiver(c);
+        return "Saved";
+    }
+
+    @RequestMapping(value="/addadmin", method = RequestMethod.GET)
+    public @ResponseBody String addNewAdmin() {
+        User a = new User();
+        a.setFirstName("admin");
+        a.setLastName("admin");
+        a.setEmail("admin@gmail.com");
+        a.setPassword("1374PaRSa");
+        a.setEnable(true);
+        userService.saveAdmin(a);
         return "Saved";
     }
 

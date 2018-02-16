@@ -61,7 +61,7 @@ public class User {
     @Email(message = "*Please enter a valid email",
             groups = {User.RegisterValidator.class})
     @NotEmpty(message = "*Please enter your email",
-            groups = {User.RegisterValidator.class})
+            groups = {User.RegisterValidator.class, ResetPasswordValidator.class})
     public String getEmail() {
         return email;
     }
@@ -139,6 +139,6 @@ public class User {
     }
 
     public interface RegisterValidator{}
-
     public interface EditValidator{}
+    public interface ResetPasswordValidator{}
 }

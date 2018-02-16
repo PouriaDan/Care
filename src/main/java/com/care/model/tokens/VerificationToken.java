@@ -1,4 +1,4 @@
-package com.care.model.verification;
+package com.care.model.tokens;
 
 import com.care.model.users.Employer;
 
@@ -11,16 +11,9 @@ import java.util.Date;
 public class VerificationToken {
     private static final int EXPIRATION = 60 * 24;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String token;
-
-    @OneToOne(targetEntity = Employer.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "user_id")
     private Employer employer;
-
     private Date expiryDate;
 
     public VerificationToken() {
@@ -49,6 +42,8 @@ public class VerificationToken {
         return new Date(cal.getTime().getTime());
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
     }
@@ -65,6 +60,8 @@ public class VerificationToken {
         this.token = token;
     }
 
+    @OneToOne(targetEntity = Employer.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false, name = "user_id")
     public Employer getEmployer() {
         return employer;
     }

@@ -1,7 +1,6 @@
 package com.care.component;
 
 import com.care.model.users.Employer;
-import com.care.model.users.User;
 import org.springframework.context.ApplicationEvent;
 
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
@@ -20,7 +19,7 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
         return employer;
     }
 
-    public void setEmployer(User user) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 

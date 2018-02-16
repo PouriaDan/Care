@@ -3,8 +3,8 @@ package com.care.controller;
 import com.care.component.OnRegistrationCompleteEvent;
 import com.care.model.users.Caregiver;
 import com.care.model.users.Employer;
-import com.care.model.verification.VerificationToken;
-import com.care.repository.verificationRepository.VerificationTokenRepository;
+import com.care.model.tokens.VerificationToken;
+import com.care.repository.tokenRepositories.VerificationTokenRepository;
 import com.care.service.userServices.CaregiverService;
 import com.care.service.userServices.EmployerService;
 import com.care.service.userServices.UserService;
@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
-import javax.validation.Valid;
 import java.util.Calendar;
 
 @Controller
@@ -35,7 +33,7 @@ public class RegistrationController {
     @Autowired
     private EmployerService employerService;
     @Autowired
-    private VerificationTokenRepository tokenRepository;
+    private VerificationTokenRepository verificationTokenRepository;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
@@ -98,27 +96,22 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
     public ModelAndView confirmRegistration (@RequestParam("token") String token) {
-
         ModelAndView modelAndView = new ModelAndView();
-
-        VerificationToken verificationToken = tokenRepository.findByToken(token);
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
-            modelAndView.addObject("error", "Invalid Token");
-            modelAndView.setViewName("login");
-            return modelAndView;
+            //TODO
         }
         Calendar cal = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-            modelAndView.addObject("error", "Expired Token");
-            modelAndView.setViewName("login");
-            return modelAndView;
+            //TODO
         }
         Employer employer = employerService.findEmployerByEmail(verificationToken.getEmployer().getEmail());
         if(token.equals(verificationToken.getToken())) {
-            modelAndView.addObject("message", "accout activation was successful");
+            modelAndView.addObject("message", "account activation was successful");
             modelAndView.setViewName("login");
-            employerService.enableEmployer(employer);
+            employerService.enableEmployer(employer, true);
         }
         return modelAndView;
     }
+
 }

@@ -27,6 +27,11 @@ public class CaregiverServiceImpl implements CaregiverService {
     }
 
     @Override
+    public Caregiver findCaregiverById(Integer id){
+        return caregiverRepository.findById(id);
+    }
+
+    @Override
     public Caregiver findCaregiverByEmail(String email){
         return caregiverRepository.findByEmail(email);
     }
@@ -36,6 +41,12 @@ public class CaregiverServiceImpl implements CaregiverService {
         caregiver.setPassword(bCryptPasswordEncoder.encode(caregiver.getPassword()));
         Role caregiverRole = roleRepository.findByRole("CAREGIVER");
         caregiver.setRoles(new HashSet<Role>(Arrays.asList(caregiverRole)));
+        caregiverRepository.save(caregiver);
+    }
+
+    @Override
+    public void enableCaregiver(Caregiver caregiver, boolean status) {
+        caregiver.setEnable(status);
         caregiverRepository.save(caregiver);
     }
 }

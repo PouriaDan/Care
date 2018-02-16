@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/genericTable.css}" />
+</head>
+<body>
+<div class="login-page">
+    <div class="form">
+        <h1>Welcome</h1>
+
+        <table style="width:100%">
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Mail</th>
+                <th>Enabled</th>
+                <th>Details</th>
+            </tr>
+            <tr th:each="caregiver : ${caregivers}">
+                <td th:text="${caregiver.firstName}"></td>
+                <td th:text="${caregiver.lastName}"></td>
+                <td th:text="${caregiver.email}"></td>
+                <td th:text="${caregiver.enable}"></td>
+                <td><a th:href="@{'/admin/caregiver-detail/'+${caregiver.id}}">View Details</a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
-package com.care.repository.verificationRepository;
+package com.care.repository.tokenRepositories;
 
 import com.care.model.users.Employer;
-import com.care.model.verification.VerificationToken;
+import com.care.model.tokens.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

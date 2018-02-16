@@ -1,14 +1,11 @@
 package com.care.component;
 
 import com.care.model.users.Employer;
-import com.care.model.users.User;
-import com.care.model.verification.VerificationToken;
-import com.care.repository.verificationRepository.VerificationTokenRepository;
+import com.care.model.tokens.VerificationToken;
+import com.care.repository.tokenRepositories.VerificationTokenRepository;
 import com.care.service.userServices.EmployerService;
-import com.care.service.userServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -18,8 +15,6 @@ import java.util.UUID;
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
-    @Autowired
-    private EmployerService employerService;
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
     @Autowired

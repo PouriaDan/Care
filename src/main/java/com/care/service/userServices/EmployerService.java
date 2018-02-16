@@ -6,5 +6,5 @@ public interface EmployerService {
     Iterable<Employer> findAllEmployers();
     Employer findEmployerByEmail(String email);
     void saveEmployer(Employer employer);
-    void enableEmployer(Employer employer);
+    void enableEmployer(Employer employer, boolean status);
 }

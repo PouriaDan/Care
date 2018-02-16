@@ -44,6 +44,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/caregiver").hasAuthority("CAREGIVER")
                     .anyRequest().authenticated()
                     .and()
+                    .csrf().disable()
                 .formLogin()
                     .loginPage("/login").defaultSuccessUrl("/profile")
                     .permitAll()

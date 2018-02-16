@@ -2,10 +2,9 @@ package com.care.service.userServices;
 
 import com.care.model.users.Employer;
 import com.care.model.Role;
-import com.care.model.verification.VerificationToken;
 import com.care.repository.userRepositories.EmployerRepository;
 import com.care.repository.RoleRepository;
-import com.care.repository.verificationRepository.VerificationTokenRepository;
+import com.care.repository.tokenRepositories.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,6 @@ public class EmployerServiceImpl implements EmployerService {
     private EmployerRepository employerRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private VerificationTokenRepository tokenRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -44,8 +41,8 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
-    public void enableEmployer(Employer employer) {
-        employer.setEnable(true);
+    public void enableEmployer(Employer employer, boolean status) {
+        employer.setEnable(status);
         employerRepository.save(employer);
     }
 }

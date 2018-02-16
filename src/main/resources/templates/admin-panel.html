@@ -3,7 +3,7 @@
 <head>
     <title>Getting Started: Handling Form Submission</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/resources/css/genericA.css" />
+    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/genericA.css}" />
 </head>
 <body>
 <div class="login-page">
@@ -11,7 +11,8 @@
         <p class="message">Admin Page</p>
         <h1>Welcome</h1>
         <p class="message" th:utext="${welcomeMessage}"></p>
-        <p class="message"><a href="/logout">Sign Out</a></p>
+        <p class="message"><a th:href="@{/admin/caregivers-list}">View The List of Caregivers</a></p>
+        <p class="message"><a th:href="@{/logout}">Sign Out</a></p>
     </div>
 </div>
 </body>
