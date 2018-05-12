@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/requests.css}"/>
+
+    <script th:src="@{/resources/static/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script th:src="@{/resources/static/js/requests.js}"></script>
+</head>
+<body>
+
+    <div th:replace="fragments :: header"></div>
+
+    <div class="ui container site-context">
+        <div class="ui segment">
+        <div class="ui grid">
+            <div class="ui row centered">
+                <h2 class="header center aligned">درخواست کنندگان</h2>
+            </div>
+            <div class="ui row">
+
+                <!-- job seekers messages -->
+                <div class="five wide column">
+                    <div class="ui vertical fluid right tabular menu yellow">
+                        <div class="item" th:each="request,iter : ${jobsRequests}" th:id="'requestItem'+${iter.index}"
+                        th:onclick="'javascript:revealBox(\''+${iter.index}+'\');'">
+                            <div class="ui grid">
+                                <div class="five wide column">
+                                    <img class="ui small image" th:src="${request.caregiver.profilePictureUrl()}"/>
+                                </div>
+                                <div class="eleven wide column">
+
+                                    <div class="content">
+                                        <h4 class="header"
+                                            th:utext="${request.caregiver.firstName}+' '+${request.caregiver.lastName}">
+                                        </h4>
+                                        <div class="meta">
+                                            <span
+                                                    th:utext="${request.caregiver.city}+', '+${request.caregiver.address}">
+                                            </span>
+                                        </div>
+                                        <br/>
+                                        <div class="extra">
+                                            10تومان
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="eleven wide stretched column center aligned">
+                    <div th:each="request,iter : ${jobsRequests}">
+                        <div class="ui yellow segment box" th:id="'requestBox'+${iter.index}">
+                            <div class="ui row">
+                                <h2 class="ui header center aligned"
+                                    th:utext="${request.caregiver.firstName}+' '+${request.caregiver.lastName}">
+                                </h2>
+
+                                <h5 class="ui header center aligned"
+                                    th:utext="${request.caregiver.city}+', '+${request.caregiver.address}">
+                                </h5>
+                                <h5>
+                                    حقوق درخواستی : 10تومان
+                                </h5>
+                            </div>
+                            <br/>
+                            <div class="ui row">
+                                <div class="ui secondary segment">
+                                    <p th:utext="${request.information}"></p>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <button class="ui inverted grey button" id="cancel-btn">رد درخواست</button>
+                            <button class="ui button" id="submit-btn">ارتباط و برنامه ریزی</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+        <!-- Option Modal -->
+        <div class="ui tiny first coupled modal modal-1 center aligned">
+            <div class="header centered">
+                از چه طریقی می خواهید با "نام" ارتباط برقرار کنید ؟
+            </div>
+            <div class="content">
+                <div class="ui equal width grid ">
+                    <div class="column">
+                        <a  href="#" class="tel-modal">
+                            <div>
+                                <!--<svg class="icon-telephone" ><use href="img/svgs/telephone.svg#telephone"></use></svg>-->
+                                <img src="../../../../../../../Downloads/frontedn/frontend%20-%20Copy/img/svgs/telephone.svg"/>
+                            </div>
+                            <label class="label-modal">مصاحبه تلفنی</label>
+                        </a>
+                    </div>
+                    <div class="column">
+                        <a href="#" class="tea-modal">
+                            <div>
+                                <img src="../../../../../../../Downloads/frontedn/frontend%20-%20Copy/img/svgs/tea-cup.svg"/>
+                            </div>
+                            <label class="label-modal">مصاحبه حضوری</label>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="actions">
+                <div class="ui inverted grey button">بازگشت</div>
+            </div>
+        </div>
+
+        <!-- Tel-Modal -->
+        <div class="ui tiny second coupled  modal">
+            <div class="header">
+                برنامه ریزی مصاحبه تلفنی
+            </div>
+            <div class="content">
+                <div class="ui grid">
+                    <div class="ui container">
+                        <form class="ui form">
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>تاریخ</label>
+                                </div>
+                                <div class="twelve wide field">
+
+                                    <!-- TODO persian calender-->
+                                    <input type="month" placeholder="Middle Name"/>
+                                </div>
+                            </div>
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>ساعت</label>
+                                </div>
+                                <div class="twelve wide field">
+                                    <input type="time" />
+                                </div>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui approve button suc-btn" >
+                    درخواست مصاحبه
+                </div>
+                <div class="ui inverted grey cancel button">
+                    انصراف
+                </div>
+            </div>
+        </div>
+
+        <!-- Tea-modal -->
+        <div class="ui tiny third coupled  modal">
+            <div class="header">
+                برنامه ریزی مصاحبه حضوری
+            </div>
+            <div class="content">
+                <div class="ui grid">
+                    <div class="ui container">
+                        <form class="ui form">
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>تاریخ</label>
+                                </div>
+                                <div class="twelve wide field">
+
+                                    <!-- TODO persian calender-->
+                                    <input type="month" placeholder="Middle Name"/>
+                                </div>
+                            </div>
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>ساعت</label>
+                                </div>
+                                <div class="twelve wide field">
+                                    <input type="time" />
+                                </div>
+                            </div>
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>مکان</label>
+                                </div>
+                                <div class="twelve wide field">
+                                    <input type="text" />
+                                </div>
+                            </div>
+                            <div class="inline fields">
+                                <div class="four wide field">
+                                    <label>تلفن</label>
+                                </div>
+                                <div class="twelve wide field">
+                                    <input type="tel" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui approve button suc-btn">
+                    درخواست مصاحبه
+                </div>
+                <div class="ui inverted grey cancel button">
+                    انصراف
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div class="ui tiny success-modal coupled  modal">
+        <div class="content">
+            <div class="description">
+                <h2>درخواست شما با موفقیت به "نام" ارسال شد</h2>
+                <br/>
+                <span>زمان و نوع درخواست</span>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui inverted grey cancel button">
+                بستن
+            </div>
+        </div>
+        </div>
+
+    <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+        function revealBox(index) {
+            $('.item').removeClass('active');
+            $('.box').hide();
+            $('#requestItem' + index).addClass('active');
+            $('#requestBox' + index).show("slow");
+        }
+        /*]]>*/
+    </script>
+    <div th:replace="fragments :: footer"></div>
+
+</body>
+</html>

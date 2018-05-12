@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>ثبت درخواست کار</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/add-job.css}"/>
+
+
+    <script th:src="@{/resources/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script th:src="@{/resources/static/js/add-job.js}"></script>
+
+</head>
+<body>
+
+    <div th:replace="fragments :: header"></div>
+
+    <div class="ui container site-context">
+        <div class="ui segment">
+            <h2>درخواست ثبت خدمت</h2>
+            <div class="ui container">
+                <h3>نیازمند کدام خدمت هستید ؟</h3>
+                <form class="ui form">
+                    <div class="field">
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="job" id="1" value="old"/>
+                                <label>پرستار سالمندان</label>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="job" id="2" value="child"/>
+                                <label>پرستار کودک</label>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="job" id="3" value="home"/>
+                                <label>خدمات منزل</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="ui segment" id="oldies">
+            <div class="ui container">
+
+                <!--scheduling-->
+                <h3>زمان بندی</h3>
+                <h3>درخواست مراقبت و نگهداری شما در چه زمانی است؟</h3>
+                <form class="ui form form1" action="/" th:action="@{/employer/save/senior-care}" th:object="${seniorCareJob}" method="post">
+
+                    <div class="ui  one fields">
+                        <div class="eight wide  field required">
+                            <label>تاریخ</label>
+                            <input name="calender" th:field="*{date}" type="text" placeholder="مثلا 97/08/10"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>از ساعت</label>
+                            <input name="fromTime" th:field="*{startTime}" type="text" placeholder="تا ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>تا ساعت</label>
+                            <input name="toTime" th:field="*{finishTime}" type="text" placeholder="تا ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+
+                    <!-- WORK DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات درباره شغل</h3>
+                    <div class="inline fields">
+                        <label>جنسیت فرد نیازمند مراقبت</label>
+                        <div class="field" th:each="gender : ${T(com.care.model.enums.Gender).values()}">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{seniorGender}" name="sexuality1" th:value="${gender}" />
+                                <label  th:text="${gender == T(com.care.model.enums.Gender).Male} ? مرد : زن"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <label>جنسیت فرد خدماتی مورد نیاز</label>
+                        <div class="field" th:each="gender : ${T(com.care.model.enums.CaregiverGender).values()}">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{caregiverGender}" name="sexuality2" th:value="${gender}" />
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Male}">مرد</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Female}">زن</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Either}">تفاوتی ندارد</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <label>آیا فرد نیازمند مراقبت شما از بیماری ای رنج میبرد؟</label>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" th:field="*{isIll}" name="isSick"/>
+                                <label>بله</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <textarea rows="1" name="sickArea" th:field="*{illnesses}" placeholder="لطفا نام بیماری ها را در این قسمت وارد کنید"></textarea>
+                    </div>
+
+                    <div class="inline field required">
+                        <label>فرد نیازمند مراقبت دارای سن :    </label>
+                        <input name="age" th:field="*{seniorAge}" type="number" placeholder="لطفا سن را وارد کنید" min="1"/>
+                    </div>
+
+                    <!-- SALARY DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>حقوق</h3>
+                    <p>میزان حقوق پیشنهادی خود را به صورت ساعتی وارد کنید</p>
+                    <div class="ui right labeled input required">
+                        <div class="ui basic label">ریال</div>
+                        <input type="number" th:field="*{pay}" placeholder="10000" name="amount" step="500" min="0"/>
+                    </div>
+
+                    <!-- MORE DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات اضافه</h3>
+                    <p>اگر نیازمندی دیگری دارید لطفا در این قسمت وارد کنید</p>
+                    <div class="inline field">
+                        <textarea rows="3" th:field="*{description}" placeholder="اطلاعات اضافه"></textarea>
+                    </div>
+
+                    <!-- TITLE DETAIL -->
+                    <div class="ui divider"></div>
+                    <div class="ui one fields">
+                        <div class="ui required sixteen wide field">
+                            <label>تیتر درخواست شما : </label>
+                            <input type="text" th:field="*{title}" name="title" />
+                        </div>
+                    </div>
+
+                    <div class="ui divider"></div>
+                    <button type="submit" class="ui  teal submit button left floated" id="submit-old">ثبت درخواست</button>
+                    <a th:href="@{/employer}" class="ui  inverted teal  button" >انصراف</a>
+
+                </form>
+            </div>
+        </div>
+        <div class="ui segment" id="children">
+
+            <!-- scheduling -->
+            <div class="ui container">
+                <h3>زمان بندی</h3>
+                <h3>درخواست مراقبت و نگهداری شما به چه شکلی است ؟</h3>
+                <form class="ui form form2" action="/" th:action="@{/employer/save/baby-sitting}" th:object="${babySittingJob}" method="post">
+                    <!--<div class="inline fields">-->
+                        <!--<div class="disabled field">-->
+                            <!--<div class="ui radio checkbox">-->
+                                <!--<input type="radio" name="job-time" />-->
+                                <!--<label>تکرار شونده</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="field ">-->
+                            <!--<div class="ui radio checkbox">-->
+                                <!--<input type="radio" checked="" name="job-time"/>-->
+                                <!--<label>یک روز در تاریخ مشخص</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="ui  one fields">
+                        <div class="eight wide  field required">
+                            <label>تاریخ</label>
+                            <input name="calender" th:field="*{date}" type="text" placeholder="مثلا 97/08/10"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>از ساعت</label>
+                            <input name="fromTime" th:field="*{startTime}" type="text" placeholder="از ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>تا ساعت</label>
+                            <input name="toTime" th:field="*{finishTime}" type="time" placeholder="تا ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+
+                    <!-- WORK DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات درباره شغل</h3>
+
+                    <p>لطفا تعداد فرزندان متناسب با سن های زیر را وارد نماید</p>
+                    <div class="fields">
+                        <div class="three wide field">
+                            <label>0 - 6 ماه</label>
+                            <input type="number" th:field="*{numbersOfKids_0_6m}" name="age" min="0" value="0"/>
+                        </div>
+                        <div class="three wide field">
+                            <label>7 ماه - 3 سال</label>
+                            <input type="number" th:field="*{numbersOfKids_7m_3y}" name="age" min="0" value="0"/>
+                        </div>
+                        <div class="three wide field">
+                            <label>4 - 6 سال</label>
+                            <input type="number" th:field="*{numbersOfKids_4y_6y}" name="age" min="0" value="0"/>
+                        </div>
+                        <div class="three wide field">
+                            <label>7 - 11 سال</label>
+                            <input type="number" th:field="*{numbersOfKids_7y_11y}" name="age" min="0" value="0"/>
+                        </div>
+                        <div class="three wide field">
+                            <label>12 سال به بالا</label>
+                            <input type="number" th:field="*{numbersOfKids_12y}" name="age" min="0" value="0"/>
+                        </div>
+                    </div>
+
+                    <div class="inline fields">
+                        <label>جنسیت فرد خدماتی مورد نیاز</label>
+                        <div class="field" th:each="gender : ${T(com.care.model.enums.CaregiverGender).values()}">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{caregiverGender}" name="sexuality2" th:value="${gender}" />
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Male}">مرد</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Female}">زن</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Either}">تفاوتی ندارد</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SALARY DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>حقوق</h3>
+                    <p>میزان حقوق پیشنهادی خود را به صورت ساعتی وارد کنید</p>
+                    <div class="ui right labeled input required">
+                        <div class="ui basic label">ریال</div>
+                        <input type="number" th:field="*{pay}" placeholder="10000" name="amount" step="500" min="0"/>
+                    </div>
+
+                    <!-- MORE DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات اضافه</h3>
+                    <p>اگر نیازمندی دیگری دارید لطفا در این قسمت وارد کنید</p>
+                    <div class="inline field">
+                        <textarea rows="3" th:field="*{description}" placeholder="اطلاعات اضافه"></textarea>
+                    </div>
+
+                    <!-- TITLE DETAIL -->
+                    <div class="ui divider"></div>
+                    <div class="ui one fields">
+                        <div class="ui required sixteen wide field">
+                            <label>تیتر درخواست شما : </label>
+                            <input type="text" th:field="*{title}" name="title" />
+                        </div>
+                    </div>
+
+                    <div class="ui divider"></div>
+                    <button class="ui  teal button left floated" id="submit-child" >ثبت درخواست</button>
+                    <a th:href="@{/employer}" class="ui  inverted teal  button" >انصراف</a>
+                </form>
+                </div>
+
+            </div>
+        <div class="ui segment" id="housework">
+
+            <!-- scheduling -->
+            <div class="ui container">
+                <h3>زمان بندی</h3>
+                <h3>درخواست مراقبت و نگهداری شما به چه شکلی است ؟</h3>
+                <form class="ui form form3" action="/" th:action="@{/employer/save/house-cleaning}" th:object="${houseCleaningJob}" method="post">
+                    <!--<div class="inline fields">-->
+                        <!--<div class="disabled field">-->
+                            <!--<div class="ui radio checkbox">-->
+                                <!--<input type="radio" name="job-time" />-->
+                                <!--<label>تکرار شونده</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="field ">-->
+                            <!--<div class="ui radio checkbox ">-->
+                                <!--<input type="radio" checked="" name="job-time"/>-->
+                                <!--<label>یک روز در تاریخ مشخص</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="ui  one fields">
+                        <div class="eight wide  field required">
+                            <label>تاریخ</label>
+                            <input name="calender" th:field="*{date}" type="text" placeholder="مثلا 97/08/10"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>از ساعت</label>
+                            <input name="fromTime" th:field="*{startTime}" type="text" placeholder="از ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+                    <div class="ui  one fields">
+                        <div class="eight wide field required">
+                            <label>تا ساعت</label>
+                            <input name="toTime" th:field="*{finishTime}" type="text" placeholder="تا ساعت (لطفا 12 ساعته وارد کنید)"/>
+                        </div>
+                    </div>
+
+                    <!-- WORK DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات درباره شغل</h3>
+                    <div class="inline fields">
+                        <label>جنسیت فرد خدماتی مورد نیاز</label>
+                        <div class="field" th:each="gender : ${T(com.care.model.enums.CaregiverGender).values()}">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{caregiverGender}" name="sexuality2" th:value="${gender}" />
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Male}">مرد</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Female}">زن</label>
+                                <label th:if="${gender == T(com.care.model.enums.CaregiverGender).Either}">تفاوتی ندارد</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field required">
+                        <label>سرویس مورد نظر خود را در این قسمت وارد کنید</label>
+                        <textarea rows="2" th:field="*{requiredServices}" name="services" placeholder="از قبیل : نظافت اتاق ها - آشپزخانه -پنجره ها و ..."></textarea>
+                    </div>
+                    <div class="inline fields">
+                        <label>دارای حیوان خانگی هستید؟</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{pet}" name="animal" th:value="true"/>
+                                <label>بله</label>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <div class="ui radio checkbox">
+                                <input type="radio" th:field="*{pet}" name="animal" th:value="false"/>
+                                <label>خیر</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SALARY DETAIL -->
+                    <div class="ui divider"></div>
+                    <h3>حقوق</h3>
+                    <p>میزان حقوق پیشنهادی خود را به صورت ساعتی وارد کنید</p>
+                    <div class="ui right labeled input">
+                        <div class="ui basic label">ریال</div>
+                        <input type="text" th:field="*{pay}" placeholder="10000" id="amount"/>
+                    </div>
+
+                    <!-- MORE DETAIL -->
+
+                    <div class="ui divider"></div>
+                    <h3>اطلاعات اضافه</h3>
+                    <h4>اگر نیازمندی دیگری دارید لطفا در این قسمت وارد کنید</h4>
+                    <div class="inline field">
+                        <textarea rows="3" th:field="*{description}" placeholder="اطلاعات اضافه"></textarea>
+                    </div>
+
+                    <!-- TITLE DETAIL -->
+                    <div class="ui divider"></div>
+                    <div class="ui one fields">
+                        <div class="ui required sixteen wide field">
+                            <label>تیتر درخواست شما : </label>
+                            <input type="text" th:field="*{title}" name="title" />
+                        </div>
+                    </div>
+
+                    <div class="ui divider"></div>
+                    <button class="ui  teal button left floated" id="submit-home" >ثبت درخواست</button>
+                    <a th:href="@{/employer}" class="ui  inverted teal  button" >انصراف</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-html"></div>
+    <div th:replace="fragments :: footer"></div>
+</body>
+</html>

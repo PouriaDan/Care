@@ -1,6 +1,7 @@
 package com.care.model.users;
 
 import com.care.model.Role;
+import com.care.model.enums.Gender;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,18 +15,22 @@ public class User {
     private Integer id;
     private String firstName;
     private String lastName;
+    private Gender gender;
     private String email;
     private String password;
     private String number;
     private String postalCode;
     private String city;
     private String address;
+    private boolean hasProfilePicture;
+    private String profilePicture;
     private boolean enable;
     private Set<Role> roles;
 
     public User() {
         super();
         this.enable=false;
+        this.hasProfilePicture=false;
     }
 
     @Id
@@ -121,7 +126,8 @@ public class User {
     }
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     public Set<Role> getRoles() {
         return roles;
     }
@@ -136,6 +142,44 @@ public class User {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public boolean isHasProfilePicture() {
+        return hasProfilePicture;
+    }
+
+    public void setHasProfilePicture(boolean hasProfilePicture) {
+        this.hasProfilePicture = hasProfilePicture;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+
+    public String profilePictureUrl() {
+        String profilePictureUrl = "";
+        if(!this.hasProfilePicture) {
+            if (this.gender == Gender.Male)
+                profilePictureUrl = "/resources/static/image/male.png";
+            if (this.gender == Gender.Female)
+                profilePictureUrl = "/resources/static/image/female.png";
+        } else {
+            profilePictureUrl = "/files/profile/picture/"+this.profilePicture;
+        }
+        return profilePictureUrl;
     }
 
     public interface RegisterValidator{}

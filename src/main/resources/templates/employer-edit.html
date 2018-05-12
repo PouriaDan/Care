@@ -1,45 +1,175 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/resources/css/generic.css" />
+    <meta charset="UTF-8"/>
+    <title>Settings</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/settings.css}"/>
+
+
+    <script th:src="@{/resources/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+    <script th:src="@{/resources/static/js/settings.js}"></script>
+
 </head>
 <body>
-<div class="login-page">
-    <div class="form">
-        <form class="register-form" action="/" th:action="@{/employer/edit}" th:object="${employer}" method="post">
+    <div th:replace="fragments :: header"></div>
+    <!-- header -->
+    <div class="header-html"></div>
 
-            <label class="alert" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></label>
-            <input type="text" th:field="*{firstName}" placeholder="First Name" />
+    <div class="ui container">
 
-            <label class="alert" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label>
-            <input type="text" th:field="*{lastName}" placeholder="Last Name" />
+        <div class="ui grid container">
 
-            <label class="alert" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></label>
-            <input type="text" th:field="*{number}" placeholder="Number" />
+            <div class="row">
+                <h1>ویرایش مشخصات</h1>
+                <div class="ui divider setting-divider"></div>
+            </div>
 
-            <label class="alert" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></label>
-            <input type="text" th:field="*{postalCode}" placeholder="Postal Code" />
+            <div class="row">
+                <div class="four wide column">
+                    <form class="ui form submit-form" method="POST" enctype="multipart/form-data" action="/files/upload/profile/picture">
+                    <div class="ui grid container">
+                            <div class="row">
+                                <div class="ui small rounded image center aligned">
+                                    <img th:src="${employer.profilePictureUrl()}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="file" class="ui icon button">
+                                    <i class="file icon"></i>
+                                    انتخاب تصویر</label>
+                                <input id="file" type="file" name="file" style="display:none"/>
 
-            <label class="alert" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></label>
-            <input type="text" th:field="*{city}" placeholder="City" />
+                            </div>
+                            <div class="row">
+                                <input class="ui left floated teal button" type="submit" value="آپلود تصویر" />
+                            </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="five wide column">
+                    <h3 th:utext="${employer.firstName}+' '+${employer.lastName}">نام کاربری</h3>
+                </div>
+            </div>
+            <div class="row">
+                <h3>اطلاعات شما</h3>
+            </div>
+            <div class="row">
+                <div class="sixteen wide column">
+                    <form class="ui  form submit-form" name="information">
+                        <div class="ui  two fields">
+                            <div class="eight wide  field">
+                                <label>نام</label>
+                                <input name="name" type="text" th:placeholder="${employer.firstName}"/>
+                            </div>
+                            <div class="eight wide field">
+                                <label>نام خانوادگی</label>
+                                <input name="familyName" type="text" th:placeholder="${employer.lastName}"/>
+                            </div>
+                        </div>
+                        <div class="ui  two fields">
+                            <div class="eight wide field">
+                                <label>پست الکترونیکی</label>
+                                <input name="email" type="email" th:placeholder="${employer.email}"/>
+                            </div>
+                            <div class="eight wide inline fields ">
+                                    <label>جنسیت</label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="sexuality" id="1"/>
+                                            <label>زن</label>
+                                        </div>
+                                    </div>
+                                    <div class="field field-border">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="sexuality" id="2"/>
+                                            <label>مرد</label>
+                                        </div>
+                                    </div>
 
-            <label class="alert" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
-            <input type="text" th:field="*{address}" placeholder="Address" />
+                            </div>
 
-            <label class="alert" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
-            <input type="password" th:field="*{password}" placeholder="Password" />
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
+                    </form>
+                </div>
+            </div>
 
-            <button>Save</button>
-        </form>
+            <div class="ui divider"></div>
+            <div class="row">
+                <h3>تغییر رمز عبور</h3>
+            </div>
+            <div class="row">
+                <div class="sixteen wide column">
+                    <form class="ui form submit-form">
+                        <div class="ui one fields">
+                            <div class="eight wide field">
+                                <label>رمز عبور فعلی</label>
+                                <input name="passwordCurrent" type="password" placeholder="رمز عبور فعلی"/>
+                            </div>
+                        </div>
+                        <div class="ui  one fields">
+                            <div class="eight wide field">
+                                <label>رمز عبور جدید</label>
+                                <input name="passwordNew" type="password" placeholder="رمز عبور جدید"/>
+                            </div>
+                        </div>
+                        <div class="ui  one fields">
+                            <div class="eight wide field">
+                                <label>تکرار رمز عبور جدید</label>
+                                <input name="passwordNewReply" type="password" placeholder="تایید رمز عبور جدید"/>
+                            </div>
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
 
-        <form class="register-form" action="/employer">
-            <button class="cancelButton">Cancel</button>
-        </form>
-        <p class="message">Already registered? <a href="/login">Sign In</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+        <div class="row">
+            <h3>آدرس</h3>
+        </div>
+        <div class="row">
+            <div>
+
+                <div class="adr-fields">
+                    <form class="ui form submit-form">
+                        <div class="ui fields">
+                            <div class="four wide field">
+                                <label>شهر</label>
+                                <input type="text" th:placeholder="${employer.city}"/>
+                            </div>
+                            <div class="twelve wide field">
+                                <label>آدرس</label>
+                                <input type="text" th:placeholder="${employer.address}"/>
+                            </div>
+                        </div>
+                        <div class="ui two fields">
+                            <div class="field">
+                                <label>شماره تماس</label>
+                                <input type="text" th:placeholder="${employer.number}"/>
+                            </div>
+                            <div class="field">
+                                <label>کد پستی</label>
+                                <input type="text" th:placeholder="${employer.postalCode}"/>
+                            </div>
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </div>
-</div>
+
+    <div class="footer-html"></div>
+
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

@@ -12,19 +12,30 @@ import java.util.Set;
 public abstract class Job {
 
     private Integer id;
+    private String type;
+    private String date;
+    private String startTime;
+    private String finishTime;
     private Employer employer;
+    private String title;
     private CaregiverGender caregiverGender;
     private int pay;
     private String Description;
     private JobStatue statue;
     private Set<Request> requests;
+    private Request acceptedRequest;
 
-//    private int jobType;
-//    private String date;
-//    private String startDate;
-//    private String finishDate;
-//    private String from;
-//    private String until;
+    public Job(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public CaregiverGender getCaregiverGender() {
         return caregiverGender;
@@ -32,6 +43,14 @@ public abstract class Job {
 
     public void setCaregiverGender(CaregiverGender caregiverGender) {
         this.caregiverGender = caregiverGender;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getPay() {
@@ -87,51 +106,37 @@ public abstract class Job {
         this.requests = requests;
     }
 
-//    public int getJobType() {
-//        return jobType;
-//    }
-//
-//    public void setJobType(int jobType) {
-//        this.jobType = jobType;
-//    }
-//
-//    public String getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(String date) {
-//        this.date = date;
-//    }
-//
-//    public String getStartDate() {
-//        return startDate;
-//    }
-//
-//    public void setStartDate(String startDate) {
-//        this.startDate = startDate;
-//    }
-//
-//    public String getFinishDate() {
-//        return finishDate;
-//    }
-//
-//    public void setFinishDate(String finishDate) {
-//        this.finishDate = finishDate;
-//    }
-//
-//    public String getFrom() {
-//        return from;
-//    }
-//
-//    public void setFrom(String from) {
-//        this.from = from;
-//    }
-//
-//    public String getUntil() {
-//        return until;
-//    }
-//
-//    public void setUntil(String until) {
-//        this.until = until;
-//    }
+    @OneToOne(targetEntity = Request.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "request_id")
+    public Request getAcceptedRequest() {
+        return acceptedRequest;
+    }
+
+    public void setAcceptedRequest(Request acceptedRequest) {
+        this.acceptedRequest = acceptedRequest;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(String finishTime) {
+        this.finishTime = finishTime;
+    }
 }

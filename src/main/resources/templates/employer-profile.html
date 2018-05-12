@@ -1,19 +1,153 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" th:href="@{/resources/css/generic.css}" />
+    <meta charset="UTF-8"/>
+    <title>پروفایل کارفرما</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/profile.css}"/>
+
+    <script th:src="@{/resources/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script th:src="@{/resources/static/js/profile.js}"></script>
+
 </head>
 <body>
-<div class="login-page">
-    <div class="form">
-        <p class="message">Employer Page</p>
-        <h1>Welcome</h1>
-        <p class="message" th:utext="${welcomeMessage}"></p>
-        <!--<p class="message"><a href="/employer/edit">Edit information</a></p>-->
-        <p class="message"><a th:href="@{/logout}">Sign Out</a></p>
+    <div th:replace="fragments :: header"></div>
+    <div class="ui container site-context page-wrap">
+        <div class="ui grid container">
+            <!-- information -->
+            <div class="four wide column right aligned ">
+                <h2 class="ui header" th:utext="${employer.firstName}+' '+${employer.lastName}"></h2>
+                <div class="ui small rounded image center aligned">
+                    <img th:src="${employer.profilePictureUrl()}"/>
+                </div>
+                <div class="ui divider " ></div>
+                <a th:href="@{/employer/add/job}">
+                    <div class="ui large purple button center">ثبت کار جدید</div>
+                </a>
+                <div class="ui animated large relaxed link right aligned list">
+                    <a class="underline-link item right aligned" th:href="@{/employer/edit}">ویرایش مشخصات</a>
+                </div>
+
+            </div>
+            <!-- tab info -->
+            <div class="twelve wide column right floating">
+                <div class="ui container">
+                    <div class="ui top attached tabular secondary pointing menu">
+                        <a class="active item back-grey" data-tab="first">
+                            <span class="tab-title">کارهای در حال انجام</span>
+                        </a>
+                        <a class="item " data-tab="second">
+                            <span class="tab-title">کارهای موجود</span>
+                        </a>
+                        <a class="item  " data-tab="third">
+                            <span class=" center text tab-title">کارهای تمام شده</span>
+                        </a>
+                    </div>
+                    <!-- first tab -->
+                    <div class="ui bottom attached tab segment active back-grey" data-tab="first">
+
+                        <div  th:if="${#lists.isEmpty(caregiverAcceptedJobs)}">
+                            <br/>
+                            <h3 class="ui center aligned header">شما تاکنون کاری ایجاد نکرده‌اید! <a th:href="@{/}">ثبت کار جدید</a></h3>
+                            <br/>
+                        </div>
+
+                        <div th:each="caregiverAcceptedJob : ${caregiverAcceptedJobs}"
+                             class="ui raised link teal card card-width">
+                            <div class="content">
+                                <div class="meta left floated">2 days ago</div>
+                                <div th:text="${caregiverAcceptedJob.title}" class="header"></div>
+                                <div class="meta">
+                                    <span th:text="${caregiverAcceptedJob.type}" class="category"></span>
+                                </div>
+
+                                <div class="description">
+                                    <p th:text="${caregiverAcceptedJob.description}"></p>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <div class="left floated author">
+                                    <img class="ui avatar image" src="../../../../../../../Downloads/frontend%20-%20Copy%20(1)/frontend%20-%20Copy/img/matthew.png"/> Matt
+                                </div>
+                                <span class="right floated star">
+                                    <a href="#"> <i class="setting icon"></i>تنظیمات </a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- second tab -->
+                    <div class="ui bottom attached tab segment back-grey" data-tab="second">
+
+                        <div  th:if="${#lists.isEmpty(waitForCaregiverJobs)}">
+                            <br/>
+                            <h3 class="ui center aligned header">شما تاکنون کاری ایجاد نکرده‌اید! <a th:href="@{/}">ثبت کار جدید</a></h3>
+                            <br/>
+                        </div>
+
+                        <div th:each="waitForCaregiverJob : ${waitForCaregiverJobs}"
+                             class="ui raised link red card card-width">
+                            <div class="content">
+                                <div class="meta left floated">2 days ago</div>
+                                <div th:text="${waitForCaregiverJob.title}" class="header">ه</div>
+                                <div class="meta">
+                                    <span th:text="${waitForCaregiverJob.type}" class="category"></span>
+                                </div>
+
+                                <div class="description">
+                                    <p th:text="${waitForCaregiverJob.description}"></p>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <div class="left floated author">
+                                    <a th:href="@{'/employer/job/'+${waitForCaregiverJob.id}+'/requests'}">   مشاهده درخواست کنندگان</a>
+                                </div>
+                                <span class="right floated star">
+                                    <a href="#"> <i class="setting icon"></i>تنظیمات </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- third tab -->
+                    <div class="ui bottom attached tab segment back-grey" data-tab="third">
+
+                        <div  th:if="${#lists.isEmpty(doneJobs)}">
+                            <br/>
+                            <h3 class="ui center aligned header">شما تاکنون کاری ایجاد نکرده‌اید! <a th:href="@{/}">ثبت کار جدید</a></h3>
+                            <br/>
+                        </div>
+
+                        <div th:each="doneJob : ${doneJobs}"
+                             class="ui raised link purple card card-width">
+                            <div class="content">
+                                <div class="meta left floated">2 days ago</div>
+                                <div th:text="${doneJob.title}" class="header"></div>
+                                <div class="meta">
+                                    <span th:text="${doneJob.type}" class="category"></span>
+                                </div>
+
+                                <div class="description">
+                                    <p th:text="${doneJob.title}"></p>
+                                </div>
+                            </div>
+                            <div class="extra content">
+                                <div class="left floated author">
+                                    <img class="ui avatar image" src="../../../../../../../Downloads/frontend%20-%20Copy%20(1)/frontend%20-%20Copy/img/matthew.png"/> Matt
+                                </div>
+                                <span class="right floated star">
+                                    <a href="#"> <i class="setting icon"></i>تنظیمات </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

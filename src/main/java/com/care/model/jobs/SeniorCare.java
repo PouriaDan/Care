@@ -12,6 +12,10 @@ public class SeniorCare extends Job{
     private boolean isIll;
     private String Illnesses;
 
+    public SeniorCare() {
+        super("پرستاری سالمندان");
+    }
+
     public Gender getSeniorGender() {
         return seniorGender;
     }

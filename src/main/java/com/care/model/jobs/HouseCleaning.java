@@ -8,6 +8,10 @@ public class HouseCleaning extends Job {
     private String requiredServices;
     private boolean pet;
 
+    public HouseCleaning() {
+        super("خدمات منزل");
+    }
+
     public String getRequiredServices() {
         return requiredServices;
     }

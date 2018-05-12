@@ -20,6 +20,7 @@ import com.care.model.users.User;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Calendar;
 
@@ -75,8 +76,9 @@ public class RegistrationController {
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
     public ModelAndView createNewEmployer(@Validated(User.RegisterValidator.class) Employer employer,
-                                                  BindingResult bindingResult,
-                                                  WebRequest request){
+                                          BindingResult bindingResult,
+                                          WebRequest request,
+                                          RedirectAttributes redirectAttributes){
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(employer.getEmail());
         if(userExists!=null){
@@ -86,16 +88,18 @@ public class RegistrationController {
         if(bindingResult.hasErrors()){
             modelAndView.setViewName("register");
         } else {
+            employerService.saveEmployer(employer);
             String appUrl = request.getContextPath();
             eventPublisher.publishEvent(new OnRegistrationCompleteEvent(employer, appUrl));
-            employerService.saveEmployer(employer);
-            return new ModelAndView("redirect:/");
+            redirectAttributes.addFlashAttribute("activationLetterSent", true);
+            return new ModelAndView("redirect:/login");
         }
         return modelAndView;
     }
 
     @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public ModelAndView confirmRegistration (@RequestParam("token") String token) {
+    public ModelAndView confirmRegistration (@RequestParam("token") String token,
+                                             RedirectAttributes redirectAttributes) {
         ModelAndView modelAndView = new ModelAndView();
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
@@ -106,10 +110,11 @@ public class RegistrationController {
             //TODO
         }
         Employer employer = employerService.findEmployerByEmail(verificationToken.getEmployer().getEmail());
+        System.out.println(employer.getId());
         if(token.equals(verificationToken.getToken())) {
-            modelAndView.addObject("message", "account activation was successful");
-            modelAndView.setViewName("login");
             employerService.enableEmployer(employer, true);
+            redirectAttributes.addFlashAttribute("activationSuccessful", true);
+            return new ModelAndView("redirect:/login");
         }
         return modelAndView;
     }

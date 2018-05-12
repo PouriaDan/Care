@@ -1,0 +1,56 @@
+body {
+    background-color: #f6f6f6;
+}
+.ui.inverted.grey.buttons .button, .ui.inverted.grey.button {
+    color: #767676;
+}
+.ui.inverted.grey.buttons .button:hover, .ui.inverted.grey.button:hover {
+    color: white;
+}
+
+#message-box {
+    display: none;
+}
+img {
+    max-width: 30%;
+}
+.ui.modal {
+    text-align: center;
+}
+
+.ui.modal .actions {
+    text-align: center;
+}
+
+.label-modal {
+    color: black;
+}
+.label-modal:hover {
+    cursor: pointer;
+    color: #FBBD08;
+}
+
+.icon-telephone {
+    width: 50px;
+//height: 612px;
+    transition: 0.5s;
+}
+
+a svg:hover .tea-cup-svg,
+a svg:hover .tel-svg {
+    fill : #FBBD08 ;
+}
+a svg .tea-cup-svg,
+a svg .tel-svg {
+    cursor: pointer;
+    transition: 200ms;
+    transition-timing-function: ease-in-out;
+    -webkit-transition: 200ms;
+    -webkit-transition-timing-function: ease-in-out;
+}
+
+
+.ui.secondary.inverted.pointing.menu {
+    border-width: 2px;
+    border-color: transparent;
+}

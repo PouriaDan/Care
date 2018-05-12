@@ -1,0 +1,40 @@
+body {
+    background-color: #f6f6f6;
+}
+.card-width{
+    width: 100% !important;
+}
+
+.back-grey {
+    background-color: #f2f2f2 !important;
+    padding: 20px;
+}
+.no-padding {
+    padding-top: 0 !important;
+}
+.selection.dropdown, .ui.form .inline.field > .selection.dropdown {
+    width: 100% !important;
+}
+.ui.dropdown .menu > .item {
+    text-align: right;
+}
+
+.ui.form .inline.fields .field > .selection.dropdown > .dropdown.icon, .ui.form .inline.field > .selection.dropdown > .dropdown.icon {
+    float: right !important;
+}
+.ui.modal {
+    text-align: right;
+}
+.ui.modal > .content > .icon + .description, .ui.modal > .content > .image + .description {
+    padding-right: 2em;
+    padding-left: 0;
+}
+.ui.modal > .actions {
+    text-align: center;
+}
+.ui.form {
+    width: 100%;
+}
+.ui.modal.success-modal {
+    text-align: center !important;
+}

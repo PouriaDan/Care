@@ -1,27 +1,84 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/resources/css/generic.css" />
+    <meta charset="UTF-8"/>
+    <title> ثبت نام کارخواه</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/login.css}"/>
+
+    <script th:src="@{/resources/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script th:src="@{/resources/static/js/login.js}"></script>
+
 </head>
 <body>
-<div class="login-page">
-    <div class="form">
-        <form class="login-form" th:action="@{/login}" method="post">
 
-            <p class="message" th:utext="${error}"></p>
-            <p class="message" th:utext="${message}"></p>
+    <div th:replace="fragments :: header"></div>
 
-            <label class="alert" th:if="${param.error}">Invalid username or password</label>
-            <input type="text" name="username" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
-
-            <button>submit</button>
-
-            <p class="message">Not registered? <a th:href="@{/register}">Create an account</a></p>
-        </form>
+    <div class="ui container centered">
+        <div class="ui masthead center aligned segment white-header">
+            <h1 class="center ">ورود اعضا</h1>
+        </div>
     </div>
-</div>
+    <div class="ui container ">
+        <div class="ui segment sign-in">
+            <div class="ui grid ">
+                <div class="row margin-bottom">
+                    <div class="seven wide column ">
+                        <h5 th:if="${loginError}" class="ui center aligned red header">آدرس ایمیل یا رمز عبور درست نیستند</h5>
+                        <h5 th:if="${activationSuccessful}" class="ui center aligned green header">حساب کاربری با موفقیت فعال شد</h5>
+                        <h5 th:if="${activationLetterSent}" class="ui center aligned grey header">ایمیل فعال سازی به پست الکترونیکی شما ارسال شد</h5>
+                        <form class="ui big stackable form " th:action="@{/login}" method="post">
+                            <div class="field">
+                                <div class="ui right icon input">
+                                    <input type="text" name="username" placeholder="آدرس ایمیل"/>
+                                    <i class="user icon"></i>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui right icon input">
+                                    <input type="password" name="password" placeholder="رمز عبور"/>
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                            <button type="submit" class="ui large teal button" id="submit-btn">ورود</button>
+                            <div class="ui checkbox margin-1">
+                                <input type="checkbox" name="remember"/>
+                                <label>مرا بخاطر بسپار</label>
+                            </div>
+                            <div class="margin-1">
+                                <a href="#">
+                                <h4 >رمز ورود خود را فراموش کرده اید ؟ </h4>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="two wide column ">
+                        <div class="ui vertical divider "></div>
+                    </div>
+                    <div class="seven wide column  center aligned">
+
+                            <h2 class="ui center aligned header"> تا به حال تجربه استفاده از ... را نداشته‌اید ؟</h2>
+
+                            <h4 >ثبت نام به عنوان</h4>
+
+                            <a th:href="@{/register}" class="ui large teal button button-left center ">خدمت دهنده</a>
+                            <a th:href="@{/resume}" class="ui large inverted teal button button-left" >خدمت گیرنده</a>
+                    </div>
+                </div>
+                <div class="row centered">
+                    <a th:href="@{/}">
+                        <h3 class="ui center aligned grey header">بازگشت به صفحه اصلی</h3>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:replace="fragments :: footer"></div>
+
 </body>
 </html>

@@ -1,44 +1,82 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/resources/css/genericCG.css" />
+    <meta charset="UTF-8"/>
+    <title> ثبت نام کارخواه</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/register.css}"/>
+
+    <script th:src="@{/resources/static/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script th:src="@{/resources/static/js/register.js}"></script>
+
 </head>
 <body>
-<div class="login-page">
-    <div class="form">
-        <form class="register-form" action="/" th:action="@{/resume}" th:object="${caregiver}" method="post">
 
-            <label class="alert" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></label>
-            <input type="text" th:field="*{firstName}" placeholder="First Name" />
+    <div th:replace="fragments :: header"></div>
 
-            <label class="alert" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label>
-            <input type="text" th:field="*{lastName}" placeholder="Last Name" />
-
-            <label class="alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
-            <input type="text" th:field="*{email}" placeholder="Email" />
-
-            <label class="alert" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
-            <input type="password" th:field="*{password}" placeholder="Password" />
-
-            <label class="alert" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></label>
-            <input type="text" th:field="*{number}" placeholder="Number" />
-
-            <label class="alert" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"></label>
-            <input type="text" th:field="*{postalCode}" placeholder="Postal Code" />
-
-            <label class="alert" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></label>
-            <input type="text" th:field="*{city}" placeholder="City" />
-
-            <label class="alert" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
-            <input type="text" th:field="*{address}" placeholder="Address" />
-
-            <button>create</button>
-
-            <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
-        </form>
+    <div class="ui container centered">
+        <div class="ui masthead center aligned segment">
+            <h1 class="center">ثبت نام به عنوان خدمت رسان / خدمت گیرنده</h1>
+        </div>
     </div>
-</div>
+    <div class="ui container">
+        <div class="ui segment sign-up">
+            <form class="ui big stackable form " action="/" th:action="@{/resume}" th:object="${caregiver}" method="post">
+                <h2 class="ui dividing header">اطلاعات</h2>
+                <div class="two fields ">
+                    <div class="field ">
+                        <input type="text" name="firstName" th:field="*{firstName}" placeholder="نام"/>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="lastName" th:field="*{lastName}" placeholder="نام خانوادگی" />
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" name="email" th:field="*{email}" placeholder="آدرس ایمیل" />
+                    </div>
+                    <div class="field">
+                        <input type="password" name="password" th:field="*{password}" placeholder="رمز عبور" />
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" name="phoneNo" th:field="*{number}" placeholder="تلفن تماس" />
+                    </div>
+                    <div class="field">
+                        <input type="text" name="postalCode" th:field="*{postalCode}" placeholder="کد پستی" />
+                    </div>
+                </div>
+                <div class="two fields">
+                    <div class="three wide field">
+                        <input type="text" name="city" th:field="*{city}" placeholder="شهر" />
+                    </div>
+                    <div class="thirteen wide field">
+                        <input type="text" name="address" th:field="*{address}" placeholder="آدرس" />
+                    </div>
+                </div>
+
+                <h2 class="ui dividing header">جنسیت</h2>
+                <div class="inline fields">
+                    <div class="field" th:each="gender,iter : ${T(com.care.model.enums.Gender).values()}">
+                        <div class="ui radio checkbox">
+                            <input type="radio" th:field="*{gender}" name="sexuality" th:value="${gender}" />
+                            <label  th:text="${gender == T(com.care.model.enums.Gender).Male} ? مرد : زن"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="ui large teal button  left floated" id="submit-btn">ارسال اطلاعات</button>
+                <a th:href="@{/}" class="ui large inverted teal button ">انصراف</a>
+            </form>
+
+        </div>
+    </div>
+
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

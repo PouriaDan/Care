@@ -1,0 +1,41 @@
+body {
+
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #EBFAFA center !important;
+    background-size: cover;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+h1 {
+    font-size: calc(20px + (28 - 14) * ((100vw - 300px) / (1600 - 300)));
+}
+h2.ui.header {
+    font-size: calc(16px + (22 - 14) * ((100vw - 300px) / (1600 - 300)));
+}
+.sign-up.segment {
+    background : #FFFFFF;
+    background : rgba(255, 255, 255, 1);
+    border-radius : 11px;
+    -moz-border-radius : 11px;
+    -webkit-border-radius : 11px;
+    margin: 0 4vw 0 4vw;
+    padding: 2vw 2vw 1vw 2vw;
+}
+.ui.dividing.header {
+    padding-bottom: 1rem;
+}
+.masthead.segment {
+    padding: 0vh 0 5vh 0 ;
+    webkit-box-shadow : 0 ;
+    border: none;
+    box-shadow: none;
+    background: transparent ;
+}
+.field-border{
+    border-left-color: #00B5AD ;
+}

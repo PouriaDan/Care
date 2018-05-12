@@ -3,7 +3,6 @@ package com.care.component;
 import com.care.model.users.Employer;
 import com.care.model.tokens.VerificationToken;
 import com.care.repository.tokenRepositories.VerificationTokenRepository;
-import com.care.service.userServices.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,7 +27,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     private void sendActivationMail(OnRegistrationCompleteEvent event){
         Employer employer = event.getEmployer();
         String token = UUID.randomUUID().toString();
-        //VerificationToken verificationToken = verificationTokenRepository.findByEmployer(employer);
+
         verificationTokenRepository.save(new VerificationToken(employer, token));
 
         String recipientAddress = employer.getEmail();

@@ -18,6 +18,8 @@ public class VerificationToken {
 
     public VerificationToken() {
         super();
+
+        this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
     public VerificationToken(final String token) {

@@ -11,6 +11,10 @@ public class BabySitting extends Job {
     private int numbersOfKids_7y_11y;
     private int numbersOfKids_12y;
 
+    public BabySitting() {
+        super("پرستاری کودکان");
+    }
+
     public int getNumbersOfKids_0_6m() {
         return numbersOfKids_0_6m;
     }

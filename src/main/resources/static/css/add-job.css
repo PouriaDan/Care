@@ -1,0 +1,20 @@
+body {
+    background-color: #F7FDFD !important;
+    height: 100%;
+}
+
+.ui.input > input{
+    text-align: right;
+}
+
+#oldies {
+    display: none;
+}
+
+#children {
+    display: none;
+}
+
+#housework {
+    display: none;
+}

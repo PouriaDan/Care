@@ -1,0 +1,40 @@
+
+.header-menu {
+    min-height: 5.5em !important;
+    margin-bottom: 6em !important;
+    margin-top: 0 !important;
+}
+.img-header {
+    min-width: 4.5em;
+}
+
+.footer.segment {
+    margin-top: 6em !important;
+    margin-bottom: 0 !important;
+    /*background-color: rgba(242,245,247,1)!important;*/
+    background-color: #E0E1E2 !important;
+}
+a svg:hover #telegram{
+    fill: #0088cc;
+}
+a svg:hover .instagram {
+    fill: #e1306c;
+}
+a svg .instagram {
+    fill : #667380;
+}
+a svg:hover #linkedin {
+    fill: #0077b5;
+}
+a svg #telegram,
+a svg .instagram,
+a svg #linkedin {
+    transition: 200ms;
+    transition-timing-function: ease-in-out;
+    -webkit-transition: 200ms;
+    -webkit-transition-timing-function: ease-in-out;
+}
+
+#telegram-link , #instagram-link , #linkedin-link {
+    margin: 0 1em 0 1em !important;
+}

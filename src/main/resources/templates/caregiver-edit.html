@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Settings</title>
+
+    <link rel="stylesheet" th:href="@{/resources/static/css/semantic/semantic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/generic.css}"/>
+    <link rel="stylesheet" th:href="@{/resources/static/css/settings.css}"/>
+
+
+    <script th:src="@{/resources/static/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/static/js/semantic.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+    <script th:src="@{/resources/static/js/settings.js}"></script>
+
+</head>
+<body>
+    <div th:replace="fragments :: header"></div>
+    <!-- header -->
+    <div class="header-html"></div>
+
+    <div class="ui container">
+
+        <div class="ui grid container">
+
+            <div class="row">
+                <h1>ویرایش مشخصات</h1>
+                <div class="ui divider setting-divider"></div>
+            </div>
+
+            <div class="row">
+                <div class="four wide column">
+                    <form class="ui form submit-form" method="POST" enctype="multipart/form-data" action="/files/upload/profile/picture">
+                    <div class="ui grid container">
+                            <div class="row">
+                                <div class="ui small rounded image center aligned">
+                                    <img th:src="${caregiver.profilePictureUrl()}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="file" class="ui icon button">
+                                    <i class="file icon"></i>
+                                    انتخاب تصویر</label>
+                                <input id="file" type="file" name="file" style="display:none"/>
+
+                            </div>
+                            <div class="row">
+                                <input class="ui left floated teal button" type="submit" value="آپلود تصویر" />
+                            </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="five wide column">
+                    <h3 th:utext="${caregiver.firstName}+' '+${caregiver.lastName}">نام کاربری</h3>
+                </div>
+            </div>
+            <div class="row">
+                <h3>اطلاعات شما</h3>
+            </div>
+            <div class="row">
+                <div class="sixteen wide column">
+                    <form class="ui  form submit-form" name="information">
+                        <div class="ui  two fields">
+                            <div class="eight wide  field">
+                                <label>نام</label>
+                                <input name="name" type="text" th:placeholder="${caregiver.firstName}"/>
+                            </div>
+                            <div class="eight wide field">
+                                <label>نام خانوادگی</label>
+                                <input name="familyName" type="text" th:placeholder="${caregiver.lastName}"/>
+                            </div>
+                        </div>
+                        <div class="ui  two fields">
+                            <div class="eight wide field">
+                                <label>پست الکترونیکی</label>
+                                <input name="email" type="email" th:placeholder="${caregiver.email}"/>
+                            </div>
+                            <div class="eight wide inline fields ">
+                                    <label>جنسیت</label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="sexuality" id="1"/>
+                                            <label>زن</label>
+                                        </div>
+                                    </div>
+                                    <div class="field field-border">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="sexuality" id="2"/>
+                                            <label>مرد</label>
+                                        </div>
+                                    </div>
+                            </div>
+
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="ui divider"></div>
+            <div class="row">
+                <h3>تغییر رمز عبور</h3>
+            </div>
+            <div class="row">
+                <div class="sixteen wide column">
+                    <form class="ui form submit-form">
+                        <div class="ui one fields">
+                            <div class="eight wide field">
+                                <label>رمز عبور فعلی</label>
+                                <input name="passwordCurrent" type="password" placeholder="رمز عبور فعلی"/>
+                            </div>
+                        </div>
+                        <div class="ui  one fields">
+                            <div class="eight wide field">
+                                <label>رمز عبور جدید</label>
+                                <input name="passwordNew" type="password" placeholder="رمز عبور جدید"/>
+                            </div>
+                        </div>
+                        <div class="ui  one fields">
+                            <div class="eight wide field">
+                                <label>تکرار رمز عبور جدید</label>
+                                <input name="passwordNewReply" type="password" placeholder="تایید رمز عبور جدید"/>
+                            </div>
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui divider"></div>
+        <div class="row">
+            <h3>آدرس</h3>
+        </div>
+        <div class="row">
+            <div>
+
+                <div class="adr-fields">
+                    <form class="ui form submit-form">
+                        <div class="ui fields">
+                            <div class="four wide field">
+                                <label>شهر</label>
+                                <input type="text" th:placeholder="${caregiver.city}"/>
+                            </div>
+                            <div class="twelve wide field">
+                                <label>آدرس</label>
+                                <input type="text" th:placeholder="${caregiver.address}"/>
+                            </div>
+                        </div>
+                        <div class="ui two fields">
+                            <div class="field">
+                                <label>شماره تماس</label>
+                                <input type="text" th:placeholder="${caregiver.number}"/>
+                            </div>
+                            <div class="field">
+                                <label>کد پستی</label>
+                                <input type="text" th:placeholder="${caregiver.postalCode}"/>
+                            </div>
+                        </div>
+                        <button class="ui left floated teal submit button" type="submit" >ثبت تغییرات</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-html"></div>
+
+    <div th:replace="fragments :: footer"></div>
+</body>
+</html>

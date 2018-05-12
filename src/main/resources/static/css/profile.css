@@ -1,0 +1,66 @@
+/**
+ * Created by Negin on 2/10/2018.
+ */
+
+body {
+    background-color: #f6f6f6;
+}
+.profile-header {
+    background-color: #00B5AD;
+    min-height: 25%;
+    max-height: 27%;
+
+}
+.img-size {
+    max-width:100%;
+    max-height:100%;
+    margin:auto;
+    display:block;
+}
+
+
+.book-info-img{
+    height: 165px;
+}
+
+.ui.segment.back-grey {
+    background-color: #f2f2f2 !important;
+}
+
+.ui.grid > .row > img, .ui.grid > .row > .column > img {
+    max-width: 55%;
+}
+.ui.grid .row + .ui.divider {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.history-margin{
+    margin-bottom: 14px !important;
+}
+/*.ui.tabular.menu .active.item  {*/
+/*background: #f2f2f2 !important;*/
+/*}*/
+
+.card-width{
+    width: 100% !important;
+}
+.ui.dropdown {
+    text-align: right;
+}
+.ui.fluid.dropdown > .dropdown.icon {
+    float: left;
+}
+.ui.dropdown .menu > .item {
+    text-align: right;
+}
+.no-padding {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+.no-margin {
+    margin-right: 0 !important;
+}
+.margin-search {
+    margin-bottom: 10px !important;
+}
